@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+# Aditya Shoor — React Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains a personal portfolio site implemented with React (Create React App). It was prepared to satisfy the COMP229 Assignment 1 requirements (Home, About, Projects, Education, Services, Contact pages, navigation, custom logo, resume PDF, project images, and an interactive contact form that captures input and redirects to Home).
 
-## Available Scripts
+Summary of changes made to complete Assignment 1:
 
-In the project directory, you can run:
+- Added a custom SVG logo (`src/assets/logo.svg`) and updated the navigation.
+- Updated pages to include content expected by the assignment: `Home`, `About` (with legal name and resume link), `Projects` (3 projects with descriptions), `Education`, `Services`, and `Contact` (form captures data and redirects back to Home).
+- Improved accessibility and semantics (aria labels, header/main/section tags).
+- Added internal comments to key files.
+- Added a simple smoke test (`src/__tests__/App.test.js`) to verify the app renders.
 
-### `npm start`
+How to run locally
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+In the project directory (PowerShell on Windows):
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```powershell
+npm install
+npm start
+```
 
-### `npm test`
+Open http://localhost:3000 in your browser.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Run tests once (non-interactive):
 
-### `npm run build`
+```powershell
+set "CI=true"; npm test -- --watchAll=false
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Build for production:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```powershell
+npm run build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Deployment
 
-### `npm run eject`
+ Automatic deployment (Netlify)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ I added a Netlify configuration (`netlify.toml`) and a GitHub Actions workflow (`.github/workflows/deploy-netlify.yml`) that will build and deploy the site on pushes to the `main` branch. To enable automatic deploys:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ 1. Create a site on Netlify (manual or by linking the GitHub repository).
+ 2. Add two repository secrets in GitHub (Settings → Secrets & variables → Actions):
+	 - `NETLIFY_AUTH_TOKEN` — a Netlify personal access token (create in Netlify user settings).
+	 - `NETLIFY_SITE_ID` — the site ID from Netlify for the site you created.
+ 3. Push changes to `main`. The GitHub Action will run, build the project and deploy the `build/` folder to the specified Netlify site.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ I also added `public/_redirects` and `netlify.toml` to ensure single-page-app routing works correctly on Netlify.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+ If you prefer Vercel instead, tell me and I’ll add a Vercel deployment configuration or guide you through linking the repo to Vercel (Vercel typically auto-detects Create React App and requires no extra files).
+ If you want me to replace the placeholder education/school/project text with your exact details, or to add more project images/descriptions, upload them or paste the content and I’ll update the pages.
+ The contact form currently logs captured data to the browser console and redirects to Home; if you want server-side email delivery I can wire a free service (Formspree, EmailJS) or set up a simple server endpoint.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
