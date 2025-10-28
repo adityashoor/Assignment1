@@ -72,8 +72,34 @@ form input, form textarea {
 }
 
 @media (max-width: 640px) {
-  .navbar ul {
-    display: none; /* simple mobile collapse - can be improved later */
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
   }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 12px;
+    background: #111827;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 12px;
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1000;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a { color: #e5e7eb }
 }
 
