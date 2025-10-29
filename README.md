@@ -1,53 +1,57 @@
 # Aditya Shoor — React Portfolio
 
-This repository contains a personal portfolio site implemented with React (Create React App). It was prepared to satisfy the COMP229 Assignment 1 requirements (Home, About, Projects, Education, Services, Contact pages, navigation, custom logo, resume PDF, project images, and an interactive contact form that captures input and redirects to Home).
+This repository contains a personal portfolio site implemented with React (Create React App) and a Node.js/Express backend for Assignment 2 requirements.
 
-Summary of changes made to complete Assignment 1:
+Frontend: `src/` — React app (Assignment 1 content)
+Backend: `server/` — Express + Mongoose REST APIs (Assignment 2)
 
-- Added a custom SVG logo (`src/assets/logo.svg`) and updated the navigation.
-- Updated pages to include content expected by the assignment: `Home`, `About` (with legal name and resume link), `Projects` (3 projects with descriptions), `Education`, `Services`, and `Contact` (form captures data and redirects back to Home).
-- Improved accessibility and semantics (aria labels, header/main/section tags).
-- Added internal comments to key files.
-- Added a simple smoke test (`src/__tests__/App.test.js`) to verify the app renders.
+## Run locally
 
-How to run locally
-
-In the project directory (PowerShell on Windows):
+1) Start MongoDB locally (e.g. `mongod`).
+2) Install frontend dependencies (if not already):
 
 ```powershell
+cd "C:\Users\adity\Desktop\React-Portfolio\react-portfolio"
 npm install
+```
+
+3) Install server dependencies and start server:
+
+```powershell
+cd "C:\Users\adity\Desktop\React-Portfolio\react-portfolio\server"
+npm install
+set "MONGO_URI=mongodb://localhost:27017/Portfolio"
+node index.js
+```
+
+4) Start React dev server (in separate terminal):
+
+```powershell
+cd "C:\Users\adity\Desktop\React-Portfolio\react-portfolio"
 npm start
 ```
 
-Open http://localhost:3000 in your browser.
+The React app proxies API requests to `http://localhost:5000` (see `package.json` proxy setting).
 
-Run tests once (non-interactive):
+## Backend
 
-```powershell
-set "CI=true"; npm test -- --watchAll=false
-```
+- Connection string default: `mongodb://localhost:27017/Portfolio` (you asked to use `mongodb://localhost:27017/` — append `Portfolio`).
+- The server exposes REST endpoints under `/api` for `contacts`, `projects`, `qualifications`, and `users`.
+- Example: POST `/api/contacts` accepts `{ firstname, lastname, email, phone, message }` and stores it in the `contacts` collection.
 
-Build for production:
+## Deployment
 
-```powershell
-npm run build
-```
+I added Netlify config and a GitHub Actions workflow to deploy the frontend build and call Netlify CLI to publish. To enable automated deployments using the workflow, add the following repository secrets:
 
-Deployment
+- `NETLIFY_AUTH_TOKEN` — Netlify personal access token
+- `NETLIFY_SITE_ID` — Netlify Site ID (API ID)
 
- Automatic deployment (Netlify)
+Alternatively, you can link the repo to Netlify or Vercel via their UI for automatic builds and deploys.
 
- I added a Netlify configuration (`netlify.toml`) and a GitHub Actions workflow (`.github/workflows/deploy-netlify.yml`) that will build and deploy the site on pushes to the `main` branch. To enable automatic deploys:
+## Notes
 
- 1. Create a site on Netlify (manual or by linking the GitHub repository).
- 2. Add two repository secrets in GitHub (Settings → Secrets & variables → Actions):
-	 - `NETLIFY_AUTH_TOKEN` — a Netlify personal access token (create in Netlify user settings).
-	 - `NETLIFY_SITE_ID` — the site ID from Netlify for the site you created.
- 3. Push changes to `main`. The GitHub Action will run, build the project and deploy the `build/` folder to the specified Netlify site.
-
- I also added `public/_redirects` and `netlify.toml` to ensure single-page-app routing works correctly on Netlify.
-
- If you prefer Vercel instead, tell me and I’ll add a Vercel deployment configuration or guide you through linking the repo to Vercel (Vercel typically auto-detects Create React App and requires no extra files).
- If you want me to replace the placeholder education/school/project text with your exact details, or to add more project images/descriptions, upload them or paste the content and I’ll update the pages.
- The contact form currently logs captured data to the browser console and redirects to Home; if you want server-side email delivery I can wire a free service (Formspree, EmailJS) or set up a simple server endpoint.
+If you'd like, I can:
+- Add JWT authentication and protected routes for `users`.
+- Add sample Postman/Thunder client requests and screenshots to satisfy assignment screenshot requirements.
+- Seed the database with sample data or implement a simple admin UI.
 
