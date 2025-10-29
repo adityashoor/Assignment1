@@ -1,10 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "../assets/logo.svg";
 
 // Navigation bar component with a simple hamburger menu for small screens.
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+      const u = JSON.parse(localStorage.getItem('user') || 'null');
+      setUser(u);
+    } catch {
+      setUser(null);
+    }
+  }, []);
 
   return (
     <header>
@@ -36,19 +47,24 @@ export default function Navbar() {
             <li><Link to="/admin" onClick={() => setOpen(false)}>Admin</Link></li>
           )}
           {/* User auth links */}
-          {(() => {
-            try {
-              const u = JSON.parse(localStorage.getItem('user') || 'null');
-              if (u && u.name) {
-                return (
-                  <li>
-                    <button onClick={() => { localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = '/'; }} style={{background:'none',border:'none',cursor:'pointer'}}>Hi, {u.name} (Sign out)</button>
-                  </li>
-                );
-              }
-            } catch { /* ignore */ }
-            return <li><Link to="/auth" onClick={() => setOpen(false)}>Sign in</Link></li>;
-          })()}
+          {user && user.name ? (
+            <li>
+              <button
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  localStorage.removeItem('user');
+                  setUser(null);
+                  setOpen(false);
+                  navigate('/');
+                }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+              >
+                Hi, {user.name} — Sign out
+              </button>
+            </li>
+          ) : (
+            <li><Link to="/auth" onClick={() => setOpen(false)}>Sign in</Link></li>
+          )}
         </ul>
       </nav>
     </header>
