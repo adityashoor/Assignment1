@@ -50,28 +50,28 @@ export default function Admin() {
   useEffect(() => { if (user) { loadProjects(); loadQualifications(); } }, [user]);
 
   const remove = async (id) => {
-    if (!confirm('Delete this contact?')) return;
+    if (!window.confirm('Delete this contact?')) return;
     const res = await fetch(`/api/contacts/${id}`, { method: 'DELETE', headers: tokenHeaders() });
     if (!res.ok) alert('Failed to delete (are you logged in?)');
     load();
   };
 
   const removeAll = async () => {
-    if (!confirm('Delete ALL contacts?')) return;
+    if (!window.confirm('Delete ALL contacts?')) return;
     const res = await fetch('/api/contacts', { method: 'DELETE', headers: tokenHeaders() });
     if (!res.ok) alert('Failed to delete all (are you logged in?)');
     load();
   };
 
   const removeProject = async (id) => {
-    if (!confirm('Delete this project?')) return;
+    if (!window.confirm('Delete this project?')) return;
     const res = await fetch(`/api/projects/${id}`, { method: 'DELETE', headers: tokenHeaders() });
     if (!res.ok) alert('Failed to delete project');
     loadProjects();
   };
 
   const removeQualification = async (id) => {
-    if (!confirm('Delete this qualification?')) return;
+    if (!window.confirm('Delete this qualification?')) return;
     const res = await fetch(`/api/qualifications/${id}`, { method: 'DELETE', headers: tokenHeaders() });
     if (!res.ok) alert('Failed to delete qualification');
     loadQualifications();
