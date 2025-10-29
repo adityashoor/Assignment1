@@ -18,15 +18,25 @@ export default function Auth() {
       const url = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
       const body = mode === 'login' ? { email, password } : { name, email, password };
       const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Request failed');
+      let data;
+      try {
+        data = await res.json();
+      } catch (parseErr) {
+        const text = await res.text();
+        throw new Error(`Unexpected response: ${res.status} ${text}`);
+      }
+      if (!res.ok) {
+        const msg = data && data.message ? data.message : `Request failed (${res.status})`;
+        throw new Error(msg);
+      }
       // store token and user
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       // navigate to home
       navigate('/');
     } catch (err) {
-      setError(err.message);
+      console.error('Auth error', err);
+      setError(err.message || 'An unknown error occurred');
     } finally {
       setLoading(false);
     }
