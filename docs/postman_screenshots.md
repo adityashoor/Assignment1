@@ -117,3 +117,13 @@ How to capture real screenshots locally
 5. Use the Postman UI to take screenshots of the request panels and responses and attach them to your assignment.
 
 If you want, I can generate PNG placeholders showing these request/response examples and commit them into `docs/` — say "generate PNGs" and I'll add them.
+
+Screenshots (placeholders)
+--------------------------
+I generated simple SVG placeholders that show the request and expected response for the main flows. You can find them here:
+
+- `docs/screenshots/postman_register.svg`
+- `docs/screenshots/postman_login.svg`
+- `docs/screenshots/postman_get_contacts.svg`
+
+They are SVGs (scalable and viewable in the browser). If you specifically need PNG files I can convert them and add PNGs instead; tell me "create PNGs" and I'll produce PNG files.
