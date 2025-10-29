@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: portfolio-server
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    autoDeploy: true
+    envVars:
+      - key: MONGO_URI
+        value: ""
+        scope: env
+      - key: JWT_SECRET
+        value: ""
+        scope: env
