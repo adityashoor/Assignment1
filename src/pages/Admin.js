@@ -14,6 +14,8 @@ export default function Admin() {
   const [user, setUser] = useState(() => {
     try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; }
   });
+  const [projects, setProjects] = useState([]);
+  const [qualifications, setQualifications] = useState([]);
 
   const load = async () => {
     setLoading(true);
@@ -32,6 +34,21 @@ export default function Admin() {
 
   useEffect(() => { if (user) load(); }, [user]);
 
+  const loadProjects = async () => {
+    try {
+      const res = await fetch('/api/projects');
+      if (res.ok) setProjects(await res.json());
+    } catch (err) { console.error('loadProjects', err); }
+  };
+
+  const loadQualifications = async () => {
+    try {
+      const res = await fetch('/api/qualifications');
+      if (res.ok) setQualifications(await res.json());
+    } catch (err) { console.error('loadQualifications', err); }
+  };
+  useEffect(() => { if (user) { loadProjects(); loadQualifications(); } }, [user]);
+
   const remove = async (id) => {
     if (!confirm('Delete this contact?')) return;
     const res = await fetch(`/api/contacts/${id}`, { method: 'DELETE', headers: tokenHeaders() });
@@ -44,6 +61,20 @@ export default function Admin() {
     const res = await fetch('/api/contacts', { method: 'DELETE', headers: tokenHeaders() });
     if (!res.ok) alert('Failed to delete all (are you logged in?)');
     load();
+  };
+
+  const removeProject = async (id) => {
+    if (!confirm('Delete this project?')) return;
+    const res = await fetch(`/api/projects/${id}`, { method: 'DELETE', headers: tokenHeaders() });
+    if (!res.ok) alert('Failed to delete project');
+    loadProjects();
+  };
+
+  const removeQualification = async (id) => {
+    if (!confirm('Delete this qualification?')) return;
+    const res = await fetch(`/api/qualifications/${id}`, { method: 'DELETE', headers: tokenHeaders() });
+    if (!res.ok) alert('Failed to delete qualification');
+    loadQualifications();
   };
 
   const login = async (ev) => {
@@ -121,6 +152,34 @@ export default function Admin() {
               ))}
             </tbody>
           </table>
+          <section style={{marginTop:20}}>
+            <h3>Projects</h3>
+            {projects.length === 0 ? <p>No projects</p> : (
+              <ul>
+                {projects.map(p => (
+                  <li key={p._id} style={{marginBottom:8}}>
+                    <strong>{p.title}</strong> — {p.description}
+                    <div><button onClick={() => removeProject(p._id)}>Delete</button></div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <section style={{marginTop:20}}>
+            <h3>Qualifications</h3>
+            {qualifications.length === 0 ? <p>No qualifications</p> : (
+              <ul>
+                {qualifications.map(q => (
+                  <li key={q._id} style={{marginBottom:8}}>
+                    <strong>{q.title}</strong> — {q.description || ''} <br />
+                    Completed: {q.completion ? new Date(q.completion).toLocaleDateString() : 'N/A'}
+                    <div><button onClick={() => removeQualification(q._id)}>Delete</button></div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
         </section>
       )}
     </main>

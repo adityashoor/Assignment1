@@ -33,10 +33,10 @@ async function run() {
     }
   ];
 
-  // Sample qualifications / education
+  // Sample qualifications / education (match Qualification model fields)
   const quals = [
-    { institution: 'University of Example', degree: 'BSc Computer Science', year: 2020, details: 'Graduated with honours.' },
-    { institution: 'Course Academy', degree: 'Full-Stack Web Dev Bootcamp', year: 2022, details: 'Intensive 12-week program.' }
+    { title: 'BSc Computer Science — University of Example', firstname: 'Aditya', lastname: 'Shoor', email: 'aditya@example.com', completion: new Date('2020-06-01'), description: 'Graduated with honours.' },
+    { title: 'Full-Stack Web Dev Bootcamp — Course Academy', firstname: 'Aditya', lastname: 'Shoor', email: 'aditya@example.com', completion: new Date('2022-08-01'), description: 'Intensive 12-week program.' }
   ];
 
   // Insert if collection empty
