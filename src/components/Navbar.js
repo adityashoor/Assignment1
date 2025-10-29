@@ -32,6 +32,9 @@ export default function Navbar() {
           <li><Link to="/education" onClick={() => setOpen(false)}>Education</Link></li>
           <li><Link to="/services" onClick={() => setOpen(false)}>Services</Link></li>
           <li><Link to="/contact" onClick={() => setOpen(false)}>Contact</Link></li>
+          {process.env.NODE_ENV !== 'production' && (
+            <li><Link to="/admin" onClick={() => setOpen(false)}>Admin</Link></li>
+          )}
         </ul>
       </nav>
     </header>

@@ -12,6 +12,12 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/Portfolio'
 app.use(cors());
 app.use(express.json());
 
+// Simple request logger for debugging
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
 // Connect to MongoDB
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB:', MONGO_URI))
@@ -37,10 +43,13 @@ app.get('/api/contacts/:id', async (req, res) => {
 
 app.post('/api/contacts', async (req, res) => {
   try {
+    console.log('POST /api/contacts payload:', req.body);
     const doc = new Contact(req.body);
     const saved = await doc.save();
+    console.log('Contact saved:', saved._id);
     res.status(201).json(saved);
   } catch (err) {
+    console.error('Error saving contact:', err);
     res.status(400).json({ message: err.message });
   }
 });
