@@ -7,6 +7,7 @@ import Education from "./pages/Education";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Admin from "./pages/Admin";
+import Auth from "./pages/Auth";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/education" element={<Education />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
+  <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>

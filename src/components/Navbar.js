@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../assets/logo.svg";
 
@@ -35,6 +35,20 @@ export default function Navbar() {
           {process.env.NODE_ENV !== 'production' && (
             <li><Link to="/admin" onClick={() => setOpen(false)}>Admin</Link></li>
           )}
+          {/* User auth links */}
+          {(() => {
+            try {
+              const u = JSON.parse(localStorage.getItem('user') || 'null');
+              if (u && u.name) {
+                return (
+                  <li>
+                    <button onClick={() => { localStorage.removeItem('token'); localStorage.removeItem('user'); window.location.href = '/'; }} style={{background:'none',border:'none',cursor:'pointer'}}>Hi, {u.name} (Sign out)</button>
+                  </li>
+                );
+              }
+            } catch { /* ignore */ }
+            return <li><Link to="/auth" onClick={() => setOpen(false)}>Sign in</Link></li>;
+          })()}
         </ul>
       </nav>
     </header>
